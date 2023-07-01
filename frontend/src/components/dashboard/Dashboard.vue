@@ -12,8 +12,8 @@
 		</div>
 		<div class="flex gap-5 justify-center items-center">
 			<TheButton @click="toVisual" :title="'查看统计结果'" />
-			<TheButton :title="'下载训练模型'" />
-			<TheButton :title="'下载预测结果'" />
+			<TheButton @click="getModel" :title="'下载训练模型'" />
+			<TheButton @click="getResult" :title="'下载预测结果'" />
 		</div>
 	</Card>
 </template>
@@ -29,7 +29,22 @@ function toVisual() {
 	router.push('/visual')
 }
 
-// function
+async function getResult() {
+	const res = await fetch('http://127.0.0.1:8000/api/result/').then((res) => {
+		return res.json()
+	})
+
+	let fileDown = document.createElement('a')
+	let event = new MouseEvent('click')
+	fileDown.download = 'result_pred.json'
+	fileDown.href =
+		'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(res))
+	fileDown.dispatchEvent(event)
+}
+
+function getModel() {
+	window.open('http://127.0.0.1:8000/api/load-model/', '_blank')
+}
 </script>
 
 <style scoped></style>

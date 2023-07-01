@@ -10,7 +10,7 @@
 						Welcome to use this system
 					</p>
 					<div class="mt-5 ml-3">
-						<TheButton :title="title" />
+						<TheButton @click="toModels" :title="title" />
 					</div>
 				</div>
 				<div class="flex justify-end w-1/2">
@@ -115,7 +115,13 @@
 <script setup>
 import Card from '../components/shared/Card.vue'
 import TheButton from '../components/shared/TheButton.vue'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
+const router = useRouter()
 const title = ref('Get started')
+
+function toModels() {
+	router.push('/models')
+}
 </script>

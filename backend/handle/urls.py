@@ -15,5 +15,6 @@ urlpatterns += [
     #         "get": "list",
     #         "post": "create"
     #     })),
-    path('result/',views.HandleResult.as_view())
+    path('result/',views.HandleResult.as_view()),
+    path('load-model/',views.load_model,name='load_model'),
 ]

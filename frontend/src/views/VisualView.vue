@@ -1,9 +1,6 @@
 <template>
 	<div class="home">
 		<div class="container">
-			<!-- <Card class="flex justify-center">
-				<TheButton @click="init" :title="title" />
-			</Card> -->
 			<Card class="flex justify-center">
 				<div ref="pie" style="width: 50%; height: 500px"></div>
 				<div ref="bar" style="width: 50%; height: 500px"></div>
@@ -13,7 +10,6 @@
 </template>
 
 <script setup>
-import TheButton from '../components/shared/TheButton.vue'
 import Card from '../components/shared/Card.vue'
 import { ref, onMounted } from 'vue'
 import * as echarts from 'echarts'
@@ -121,7 +117,7 @@ const chartData = async () => {
 	})
 	// console.log('data :>> ', data)
 
-	const handleData = data.map((item) => item.res)
+	const handleData = data.map((item) => item.res_type)
 
 	const stats = handleData.reduce((acc, curr) => {
 		acc[curr] = (acc[curr] || 0) + 1
@@ -133,6 +129,7 @@ const chartData = async () => {
 		name: `故障类型${key}`,
 	}))
 
+	// console.log('transformData :>> ', transformData)
 	return transformData
 }
 
