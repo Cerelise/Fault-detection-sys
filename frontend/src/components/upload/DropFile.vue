@@ -111,7 +111,7 @@ function trainUpload() {
 				'Content-Type': 'multipart/form-data',
 			},
 		})
-		.then((res) => console.log(res.data))
+		.then((res) => console.log(res.data.message))
 		.catch((error) => {
 			console.log('error :>> ', error)
 		})
@@ -130,7 +130,7 @@ function testsetUpload() {
 				'Content-Type': 'multipart/form-data',
 			},
 		})
-		.then((res) => console.log(res.data))
+		.then((res) => console.log(res.data.message))
 		.catch((error) => {
 			console.log('error :>> ', error)
 		})

@@ -1,16 +1,8 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.model_selection import train_test_split
 import numpy
 import json
 import joblib
-import csv
-from io import StringIO
-from sklearn import tree
-#import graphviz
-import pydotplus
-import sklearn
+from sklearn.ensemble import RandomForestClassifier
 import os
 
 #判断写入路径是否存在
@@ -48,13 +40,15 @@ for name in feature_names:
     #plt.title('{} Probabilitydensity function'.format(name))
     #plt.savefig('C:/Users/sytt0/Desktop/软件杯/work/{}的概率密度函数图.png'.format(name))
 '''
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+RES_DIR = os.path.join(BASE_DIR, 'upload','res')
+
+
 def read_plit():
     # 获取当前根目录
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    RES_DIR = os.path.join(BASE_DIR, 'res')
     ensure_exist(RES_DIR)
     #读取数据
-    df = pd.read_csv(os.path.abspath(os.path.join(BASE_DIR + '\\static\\upload_file\\test.csv')), index_col=None)
+    df = pd.read_csv(os.path.abspath(os.path.join(BASE_DIR + '\\upload\\tests\\test.csv')), index_col=None)
     # 数据标准化
     features = df.iloc[:, 1:-1]
     numeric_features = features.dtypes[features.dtypes != 'object'].index
@@ -73,12 +67,9 @@ def read_plit():
 
 
 def data_deal():    # 处理数据集
-    # 获取当前根目录
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    RES_DIR = os.path.join(BASE_DIR, 'res')
     ensure_exist(RES_DIR)
     #读取数据
-    df = pd.read_csv(os.path.abspath(os.path.join(BASE_DIR + '\\static\\upload_file\\train.csv')), index_col=None)
+    df = pd.read_csv(os.path.abspath(os.path.join(BASE_DIR + '\\upload\\trains\\train.csv')), index_col=None)
     # 数据标准化
     features = df.iloc[:, 1:-1]
     numeric_features = features.dtypes[features.dtypes != 'object'].index
@@ -98,7 +89,7 @@ def data_deal():    # 处理数据集
     y = df[['label']]
 
     # 实例化随机森林
-    from sklearn.ensemble import RandomForestClassifier
+
     rf = RandomForestClassifier(
         criterion='gini',
         n_estimators=50,
@@ -121,8 +112,6 @@ def data_deal():    # 处理数据集
 # 指标计算 参数：array
 def metrics_calculate(pred, y_test):
     # 获取当前根目录
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    RES_DIR = os.path.join(BASE_DIR, 'res')
     ensure_exist(RES_DIR)
     txt_path = os.path.join(RES_DIR, 'result_RandomForest.txt')
 
@@ -317,8 +306,6 @@ def metrics_calculate(pred, y_test):
 
 def res_pro(x_test,y_test_use): #获取预测结果
     # 获取当前根目录
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    RES_DIR = os.path.join(BASE_DIR, 'res')
     ensure_exist(RES_DIR)
     #csv_path1 = os.path.join(RES_DIR, 'result_pred.csv')
     json_path=os.path.join(RES_DIR, 'result_pred.json')
@@ -331,8 +318,6 @@ def res_pro(x_test,y_test_use): #获取预测结果
 
 #保存模型
 def use_model(x_test):
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    RES_DIR = os.path.join(BASE_DIR, 'res')
     ensure_exist(RES_DIR)
     model_path = os.path.join(RES_DIR, 'rf.pkl')
     rf_new = joblib.load(model_path)
